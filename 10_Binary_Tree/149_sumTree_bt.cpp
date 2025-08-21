@@ -67,6 +67,6 @@ int main() {
     } else {
         cout << "Tree does NOT satisfy children-sum property\n";
     }
-    cout<<"Hello!";
+    
     return 0;
 }
