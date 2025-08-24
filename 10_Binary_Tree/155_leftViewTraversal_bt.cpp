@@ -15,47 +15,44 @@ public:
 };
 
     
-    vector<int> verticalOrderTraversal(Node *root) {
-       
-         vector<int> ans;
-
-         if(root==NULL){
+    vector<int> leftViewTraversal(Node *root) {
+     
+          vector<int> ans;
+        if(root==NULL){
             return ans;
-         }
-        // map<indx,level<values>
-        map<int,map<int,vector<int>>> nodes;
-        queue<pair<Node*,pair<int,int>>> q;
-        q.push({root,{0,0}});
-
+        }
+        
+        map<int,int> nodes;
+        queue<pair<Node*,int>> q;
+        q.push({root,0});
+        
         while(!q.empty()){
-            pair<Node*,pair<int,int>> temp = q.front();
+            pair<Node*,int> temp= q.front();
             q.pop();
-
             Node* curr = temp.first;
-            int indx = temp.second.first;
-            int lvl = temp.second.second;
-
-            nodes[indx][lvl].push_back(curr->data);
-
+            int level = temp.second;
+            
+            if(nodes.find(level)==nodes.end()){
+                nodes[level] = curr->data;
+            }
+            
             if(curr->left){
-                q.push({curr->left,{indx-1,lvl+1}});
+                q.push({curr->left,level+1});
             }
             if(curr->right){
-                q.push({curr->right,{indx+1,lvl+1}});
+                q.push({curr->right,level+1});
             }
+            
 
-
+            
         }
+        
         for(auto i:nodes){
-            for(auto j:i.second){
-                for(auto k:j.second){
-                    ans.push_back(k);
-                }
-            }
+            ans.push_back(i.second);
         }
-         
-         
-         return ans;
+    
+        return ans;
+       
          
          
     }
@@ -75,9 +72,9 @@ int main() {
     root->right->right = new Node(6); 
 
     
-   vector<int> result = verticalOrderTraversal(root);
+   vector<int> result =  leftViewTraversal(root);
 
-    cout << "Vertical Order Traversal:"<<endl;
+    cout << "Left View Traversal:"<<endl;
    
         for(int val : result){
             cout << val << " ";
