@@ -43,7 +43,14 @@ void levelOrderTraversal1(Node *root){
         cout<<endl;
     }
 
-}
+}   
+    // we can use map also for o(1) optimiztion 
+    //     void mapNode( map<int,int> &nodeIndex,vector<int>& inorder,int n){
+
+    //     for(int i = 0; i<n; i++){
+    //         nodeIndex[inorder[i]] = i;
+    //     }
+    // }
     int findPosi(vector<int> &inorder,int ele,int n){
         for(int i = 0; i<n; i++){
             if(inorder[i]==ele){
@@ -93,3 +100,6 @@ int main(){
     levelOrderTraversal1(root);
 
 }
+
+
+
