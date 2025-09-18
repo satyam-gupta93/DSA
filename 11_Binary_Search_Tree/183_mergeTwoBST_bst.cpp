@@ -160,10 +160,8 @@
 
 
 #include <iostream>
-#include <vector>
-#include<queue>
+#include <queue>
 using namespace std;
-
 
 class Node {
 public:
@@ -176,157 +174,132 @@ public:
         left = right = NULL;
     }
 };
-    void levelOrder(Node* root) {
-        if (!root) return;
-        queue<Node*> q;
-        q.push(root);
-        while(!q.empty()) {
-            int size = q.size();
-            while(size--) {
-                Node* node = q.front();
-                q.pop();
-                cout << node->data << " ";
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
-            cout << endl;
+
+
+void levelOrder(Node* root) {
+    if (!root) return;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        int size = q.size();
+        while (size--) {
+            Node* node = q.front();
+            q.pop();
+            cout << node->data << " ";
+            if (node->left) q.push(node->left);
+            if (node->right) q.push(node->right);
         }
+        cout << endl;
     }
+}
 
-    Node* bstToLL(Node* root,Node* &prev){
-        if(root==NULL){
-            return root;
-        }
 
-        Node* head = bstToLL(root->left,prev);
+Node* bstToLL(Node* root, Node*& prev) {
+    if (!root) return NULL;
 
-        if(prev==NULL){
-            head = root;
-        }else{
-            prev->right = root;
-            prev->left = NULL;
-            
-        }
+    Node* head = bstToLL(root->left, prev);
 
-        prev = root;
-        root->left = NULL;
+    if (!prev) head = root;
+    else prev->right = root;
 
-        bstToLL(root->right,prev);
+    prev = root;
+    root->left = NULL;
 
-        return head;
-    }
-    Node* mergeTwoLL(Node* head1,Node* head2){
-        if(head1==NULL){
-            return head2;
-        }
+    bstToLL(root->right, prev);
+    return head;
+}
 
-        if(head2==NULL){
-            return head1;
-        }
-        Node* dummy = new Node(-1);
-        Node* tail = dummy;
 
-        while(head1!=NULL && head2!=NULL){
-            if(head1->data<head2->data){
-                tail->right = head1;
-                head1 = head1->right;
-            }else{
-                 tail->right = head2;
-                head2 = head2->right;
-            }
+Node* mergeTwoLL(Node* head1, Node* head2) {
+    if (!head1) return head2;
+    if (!head2) return head1;
 
-            tail = tail->right;
-        }
+    Node* dummy = new Node(-1);
+    Node* tail = dummy;
 
-        if(head1!=NULL){
+    while (head1 && head2) {
+        if (head1->data < head2->data) {
             tail->right = head1;
-        }
-        if(head2!=NULL){
+            head1 = head1->right;
+        } else {
             tail->right = head2;
+            head2 = head2->right;
         }
-
-        Node* head = dummy->right;
-
-        delete dummy;
-
-        return head;
-
-
-    }
-    Node* findMiddle(Node* head,Node* tail){
-        if(head==NULL){
-            return NULL;
-        }
-        Node* slow = head;
-        Node* fast = head;
-
-        while(fast!=tail && fast->right!=tail){
-            slow = slow->right;
-            fast = fast->right->right;
-        }
-
-        return slow;
-    }
-    Node* bstFromLL(Node* head,Node* tail=NULL){
-        if(head==tail){
-            return NULL;
-        }
-
-        Node* mid = findMiddle(head,tail);
-        Node* root = new Node(mid->data);
-
-
-        root->left = bstFromLL(head,mid);
-        root->right = bstFromLL(mid->right,tail);
-
-
-        return root;
-    }
-    Node* merge(Node* root1,Node* root2){
-
-        Node* prev= NULL;
-        Node* head1 = bstToLL(root1,prev);
-        prev = NULL;
-        Node* head2 = bstToLL(root2,prev);
-
-
-        Node* head = mergeTwoLL(head1,head2);
-
-        return bstFromLL(head);
-
-
-
+        tail = tail->right;
+        tail->left = NULL;
     }
 
+    if (head1) tail->right = head1;
+    if (head2) tail->right = head2;
+
+    Node* head = dummy->right;
+    delete dummy;
+    return head;
+}
+
+
+Node* curr; // global pointer for current node in LL
+
+int getLength(Node* head) {
+    int len = 0;
+    while (head) {
+        len++;
+        head = head->right;
+    }
+    return len;
+}
+
+Node* sortedLLToBST(int n) {
+    if (n <= 0) return NULL;
+
+    Node* left = sortedLLToBST(n / 2);
+
+    Node* root = curr;
+    root->left = left;
+
+    curr = curr->right;
+
+    root->right = sortedLLToBST(n - n / 2 - 1);
+
+    return root;
+}
+
+
+Node* merge(Node* root1, Node* root2) {
+    Node* prev = NULL;
+    Node* head1 = bstToLL(root1, prev);
+
+    prev = NULL;
+    Node* head2 = bstToLL(root2, prev);
+
+    Node* mergedHead = mergeTwoLL(head1, head2);
+
+    curr = mergedHead;
+    int totalNodes = getLength(mergedHead);
+
+    return sortedLLToBST(totalNodes);
+}
+
+// -------- Main --------
 int main() {
- // First BST
     Node* root1 = new Node(2);
     root1->left = new Node(1);
     root1->right = new Node(4);
 
-    // Second BST
     Node* root2 = new Node(9);
     root2->left = new Node(3);
     root2->right = new Node(12);
 
-
-    cout<<"Level order BST-1:"<<endl;
+    cout << "Level order BST-1:\n";
     levelOrder(root1);
 
-    cout<<"Level order BST-2:"<<endl;
+    cout << "Level order BST-2:\n";
     levelOrder(root2);
 
-    // Merge the two BSTs
     Node* mergedRoot = merge(root1, root2);
 
     cout << "Level Order Traversal of Merged Balanced BST:\n";
     levelOrder(mergedRoot);
 
-
     return 0;
-
-
-
-
 }
-
