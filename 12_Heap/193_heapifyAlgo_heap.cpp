@@ -2,99 +2,58 @@
 using namespace  std;
 
 
-class Heap{
 
-    public:
-        int size;
-        int arr[100];
 
-        Heap(){
-            size = 0;
-            arr[0] = -1;
+void heapify(int arr[],int n,int i){
+        int largest = i;
+
+            int left = 2*i;
+            int right = 2*i + 1;
+
+
+            if(left<=n && arr[left] > arr[largest] ){
+                largest = left;
+            }
+
+            if(right<=n && arr[right] > arr[largest]){
+                largest = right;
+            }
+
+            if(largest!=i){
+                swap(arr[largest],arr[i]);
+                heapify(arr,n,largest);
+            }
+        }
+
+        void bulidHeap(int arr[],int n){
+            for(int i = n/2; i>=1; i--){
+                heapify(arr,n,i);
+            }
         }
 
 
-        void insert(int val){
-            size = size + 1;
-            int indx = size;
-            arr[indx] = val;
-
-
-            while(indx>1){
-            int parent = indx/2;
-            
-            if(arr[parent] < arr[indx] ){
-                swap(arr[parent],arr[indx]);
-                 indx = parent; 
-            }else{
-                return;
-            }
-            
-            }
-
-            // TC - O(log(n));
-        }
-
-        void deletefromHeap(){
-            
-            if(size==0){
-                cout<<"Empty!";
-                return;
-            }
-
-            arr[1] = arr[size];
-            size--;
-
-            int i = 1;
-
-            while(i<size){
-                int leftIndx = 2*i;
-                int rightIndx = 2*i + 1;
-
-
-                 if(leftIndx < size && arr[i] < arr[leftIndx]){
-
-                    swap(arr[i],arr[leftIndx]);
-                    i = leftIndx;
-                
-                }else if(rightIndx < size && arr[i] < arr[rightIndx]){
-                    swap(arr[i],arr[rightIndx]);
-                    i = rightIndx;
-                }else{
-                    return;
-                }
-
-            }
-
-            
-            // TC - O(log(n));
-           
-        }
-
-        void print(){
-            for(int i = 1; i<=size; i++){
-                cout<<arr[i]<<" ";
-            }
-            cout<<endl;
-        }
-
-
-};
+        void printArray(int arr[], int n) {
+            for (int i = 1; i <=n; i++) {
+            cout << arr[i] << " ";
+    }
+    cout << endl;
+}
 
 
 int main(){
 
-    Heap h;
-    h.insert(50);
-    h.insert(60);
-    h.insert(70);
-    h.insert(55);
-    h.insert(65);
+    
 
-    h.print();
+    int arr[6] = {-1,54,53,55,52,50};
+    int n = 5;
+    printArray(arr,n);
 
-    h.deletefromHeap();
-    h.print();
+    bulidHeap(arr,n);
+    printArray(arr,n);
+
+    
+
+    
     
 
 
