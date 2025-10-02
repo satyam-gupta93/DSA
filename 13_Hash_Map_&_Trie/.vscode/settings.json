@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.dbclient-js": "javascript",
+        "*.ejs": "html",
+        "ostream": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "initializer_list": "cpp"
+    }
+}
