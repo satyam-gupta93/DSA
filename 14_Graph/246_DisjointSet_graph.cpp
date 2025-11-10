@@ -45,10 +45,10 @@ class DisjoinSet{
         int pu = findUP(u);
         int pv = findUP(v);
 
-        if (pu == pv)
+        if(pu == pv)
             return;
 
-        if (size[pu] < size[pv]) {
+        if(size[pu] < size[pv]) {
             parent[pu] = pv;
             size[pv] += size[pu];
         } else {
@@ -58,7 +58,6 @@ class DisjoinSet{
     }
     
 };
-
 
 int main() {
     DisjoinSet ds(7);
