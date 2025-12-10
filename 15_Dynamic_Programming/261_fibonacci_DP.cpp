@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Memoization 
 int fibo( vector<int> &dp,int n){
 
     if(n<=1){
@@ -14,6 +15,22 @@ int fibo( vector<int> &dp,int n){
     return dp[n] = fibo(dp,n-2) + fibo(dp,n-1);
 }
 
+// Tabulation
+int fiboTabulation(int n){
+
+    vector<int> dp(n+1,-1);
+
+    dp[0] = 0;
+    dp[1] = 1;
+
+    for(int i = 2; i<=n; i++){
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+
+    return dp[n];
+
+}
+
 int main(){
     int n;
     cout<<"Enter N:";
@@ -21,8 +38,10 @@ int main(){
 
     vector<int> dp(n+1,-1);
 
-    int ans = fibo(dp,n);
+    int ansMemo = fibo(dp,n);
+    int ansTabul = fiboTabulation(n);
 
-    cout<<"Ans:"<<ans<<endl;
+    cout<<"Ans Memoization:"<<ansMemo<<endl;
+    cout<<"Ans Tabulation:"<<ansTabul<<endl;
 
 }
