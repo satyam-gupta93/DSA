@@ -57,6 +57,9 @@ int frogRec(int i, vector<int>& height) {
         // Code here
         int n = height.size();
         vector<int> dp(n);
+        if(n<=1){
+            return 0;
+        }
         
         dp[0] = 0;
         
