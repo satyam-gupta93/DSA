@@ -122,7 +122,7 @@ int findTargetSumWays(vector<int>& nums, int target) {
         }
       
         int sumP = (sum + target)/2;
-        vector<vector<int>> dp(n,vector<int> (sumP+1,0));
+        
         vector<int> prev(sumP+1,0);
         if(nums[0] == 0){
            prev[0] = 2;
