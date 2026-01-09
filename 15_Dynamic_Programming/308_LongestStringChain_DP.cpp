@@ -10,7 +10,7 @@ using namespace std;
         int second = 0;
 
         while(second!=s2.size()){
-            if(s1[first] == s2[second]){
+            if( first < s1.size() &&  s1[first] == s2[second]){
                 first++;
                 second++;
             }else{
