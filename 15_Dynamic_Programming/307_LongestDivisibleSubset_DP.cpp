@@ -38,7 +38,7 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
         return ans;
 }
 int main(){
-    vector<int> arr = {10, 22, 9, 33, 21, 50, 41, 60, 80};
+    vector<int> arr = {10, 20, 9, 33, 21, 50, 41, 60, 80};
     
     vector<int> ans = largestDivisibleSubset(arr);
     cout<<"Longest Divisible Subset:";
