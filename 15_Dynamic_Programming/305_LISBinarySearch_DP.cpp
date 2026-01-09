@@ -1,11 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+   Binary Search
+   TC: O(N*log(N))
+   SC: O(n)
+*/
+
 int LIS(vector<int>& arr) {
         // code here
         int n = arr.size();
         
-        vector<int> temp;
+        vector<int> temp; // it not the LIS but give length same 
         temp.push_back(arr[0]);
         
         for(int i = 0; i<n; i++){
@@ -24,7 +30,7 @@ int main() {
 
     vector<int> nums = {10, 9, 2, 5, 3, 7, 101, 18};
 
-    cout << "Lenght of Longest Commmon Sequence:"<< LIS(nums) << endl;
+    cout << "Lenght of Longest Increasing Sequence:"<< LIS(nums) << endl;
 
     
 
