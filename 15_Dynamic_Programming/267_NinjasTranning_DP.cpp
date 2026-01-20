@@ -137,8 +137,8 @@ int solveSpaceOP(vector<vector<int>>& arr) {
                 for(int t = 0; t<3; t++){
                     if(l!=t){
                        
-                         int val = arr[d][t] + prev[t];
-                            curr[l]= max(curr[l],val);
+                        int val = arr[d][t] + prev[t];
+                        curr[l]= max(curr[l],val);
                     }
                    
                 }

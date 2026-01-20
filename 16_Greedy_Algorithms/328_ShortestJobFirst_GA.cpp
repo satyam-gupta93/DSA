@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-    long long solve(vector<int>& bt) {
+long long solve(vector<int>& bt) {
       
         sort(bt.begin(),bt.end());
         
@@ -16,7 +16,7 @@ using namespace std;
             sum = sum + time;
         }
         
-        // cout<<sum;
+
         
         return sum/n;
 }
